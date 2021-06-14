@@ -66,8 +66,8 @@ JPQL
 Use annotation 
 Mapping field to columns
 
-Relationship
-@ManyToMany
+           Relationship
+           @ManyToMany
 
 
 You can inheritance to map class and inhreritanced classes to 1 table
@@ -81,74 +81,75 @@ Tomcat – spring boot embedded
 
 JPA always need default constructor(constructor without arguments) in the entity(bean) class 
 
-@Entity
-public class User {
+             @Entity
+             public class User {
 
-    @Id
-    @GeneratedValue
-    private long id;
-    
+                 @Id
+                 @GeneratedValue
+                 private long id;
 
-    private String name;
-    
-    private String role;
-    
 
-    protected User() {
+                 private String name;
 
-    }
+                 private String role;
+
+
+                 protected User() {
+
+                 }
 
 
 entity for persisted to a database
 
 
-// repository is something that interact with the database
-@Repository
-@Transactional
-public class UserDAOService {
+          // repository is something that interact with the database
+          @Repository
+          @Transactional
+          public class UserDAOService {
 
-    // to save data in db
-    @PersistenceContext
-    private EntityManager entityManager; 
-    
-    public long insert(User user) {
-        // open Transaction
-        entityManager.persist(user);
-        // cloase transaction
-        return user.getId();
-    }
-}
+              // to save data in db
+              @PersistenceContext
+              private EntityManager entityManager; 
 
-
+              public long insert(User user) {
+                  // open Transaction
+                  entityManager.persist(user);
+                  // cloase transaction
+                  return user.getId();
+              }
+          }
 
 
 
-@Component
-public class UserDaoServiceCommandLineRunner implements CommandLineRunner {
 
-    @Autowired
-    private UserDAOService userDAOService;
 
-    private static final Logger log = LoggerFactory.getLogger(UserDaoServiceCommandLineRunner.class);
+             @Component
+             public class UserDaoServiceCommandLineRunner implements CommandLineRunner {
 
-    @Override
-    public void run(String... args) throws Exception {
-        // TODO Auto-generated method stub
-        User user = new User("jack","admin");
-        long insert = userDAOService.insert(user);
-        log.info("New User is created : " + user);
-    }
-    
-}
+                 @Autowired
+                 private UserDAOService userDAOService;
+
+                 private static final Logger log = LoggerFactory.getLogger(UserDaoServiceCommandLineRunner.class);
+
+                 @Override
+                 public void run(String... args) throws Exception {
+                     // TODO Auto-generated method stub
+                     User user = new User("jack","admin");
+                     long insert = userDAOService.insert(user);
+                     log.info("New User is created : " + user);
+                 }
+
+             }
+             
 In memory database – h2 
 
 Spring boot auto configuration create the datasource
 
 // spring data JPA - just define the intefaces, define repository interfaces
 
-@Component
-public interface UserRepository extends JpaRepository<User, Long> {
-    
-}
+          @Component
+          public interface UserRepository extends JpaRepository<User, Long> {
+
+          }
 
 
